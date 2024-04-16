@@ -1,7 +1,24 @@
-const fs = require("fs");
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3()
 
-fs.writeFileSync("test.txt", "Hello World " + Math.random(), "utf-8");
 
-require('http').createServer((req, res) => {
-    res.end(fs.readFileSync("./text.txt"));
-}).listen(process.env.PORT || 3000)
+const start = (async () => {
+
+    // store something
+    /*
+    await s3.putObject({
+        Body: "Hello, world",
+        Bucket: "cyclic-long-teal-hare-toga-eu-west-3",
+        Key: "some_files/my_file.json",
+    }).promise()
+    */
+
+    require('http').createServer(async (req, res) => {
+
+        res.end(await s3.getObject({
+            //Bucket: "cyclic-long-teal-hare-toga-eu-west-3",
+            Key: "some_files/my_file.json",
+        }).promise());
+
+    }).listen(80).listen(8080)
+})()
