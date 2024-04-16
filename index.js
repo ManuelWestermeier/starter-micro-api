@@ -20,5 +20,5 @@ const start = (async () => {
             Key: "some_files/my_file.json",
         }).promise());
 
-    }).listen(80).listen(8080)
+    }).listen(process.env.PORT || 3000)
 })()
